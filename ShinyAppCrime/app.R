@@ -38,7 +38,8 @@ dispatch_calls2022 <-read.csv("https://raw.githubusercontent.com/karolo89/Raw_Da
   select(-Day)|>
   mutate(date= as.yearmon(paste(Year, Month), "%Y %m"))
 
-calls <- rbind(dispatch_calls2022, dispatch_calls2023)
+calls <- rbind(dispatch_calls2022, dispatch_calls2023)%>% na.omit()
+  
 
 month_call <- calls |>
   group_by(date, Year, FinalCallGroup)|>
@@ -128,10 +129,11 @@ server <- function(input, output) {
            y= "") +
       theme_minimal()+
       theme(
-            legend.position = "none",
-            panel.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
-            plot.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
-            legend.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"))
+        axis.text = element_text(size= 14),
+        legend.position = "none",
+        panel.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
+        plot.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
+        legend.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"))
   })
   
   output$table <- DT::renderDataTable({
@@ -147,10 +149,11 @@ server <- function(input, output) {
       theme(legend.position = "none")+
       theme_minimal()+
       theme(
-            legend.position = "none",
-            panel.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
-            plot.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
-            legend.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"))
+        axis.text = element_text(size= 14),
+        legend.position = "none",
+        panel.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
+        plot.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"),
+        legend.background = element_rect(colour = "#fdf8ec", fill = "#fdf8ec"))
   })
   
 }
