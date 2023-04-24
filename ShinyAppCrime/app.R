@@ -12,33 +12,13 @@ library(forcats)
 
 
 
-dispatch_calls2023 <- read.csv("https://raw.githubusercontent.com/karolo89/Raw_Data/main/dispatchedcalls_opendata_2023_1.csv")|>
-  select(-ReportDateTime)|>
+calls<- read.csv("https://raw.githubusercontent.com/karolo89/Raw_Data/main/calls.csv")|>
   mutate(Priority = as.factor(Priority))|>
-  mutate(FinalCallCategory = as.factor(FinalCallCategory)) |>
   mutate(FinalCallGroup = as.factor(FinalCallGroup))|>
   mutate(Neighborhood = as.factor(Neighborhood))|>
-  mutate(ReportMonthYear = mdy(ReportMonthYear))|>
-  mutate_if(is.character, as.double)|>
   mutate(ResponseTime= ResponseTime_sec/60)|>
-  separate("ReportMonthYear", c("Year", "Month", "Day"), sep = "-")|>
-  select(-Day)|>
-  mutate(date= as.yearmon(paste(Year, Month), "%Y %m"))
-
-dispatch_calls2022 <-read.csv("https://raw.githubusercontent.com/karolo89/Raw_Data/main/dispatchedcalls_opendata_2022_0.csv")|>
-  mutate(Priority = as.factor(Priority))|>
-  mutate(FinalCallCategory = as.factor(FinalCallCategory)) |>
-  mutate(FinalCallGroup = as.factor(FinalCallGroup))|>
-  mutate(Neighborhood = as.factor(Neighborhood))|>
-  mutate(ReportMonthYear = mdy(ReportMonthYear))|>
-  mutate_if(is.character, as.double)|>
-  mutate(ResponseTime= ResponseTime_sec/60)|>
-  separate("ReportMonthYear", c("Year", "Month", "Day"), sep = "-")|>
-  select(-Day)|>
-  mutate(date= as.yearmon(paste(Year, Month), "%Y %m"))
-
-calls <- rbind(dispatch_calls2022, dispatch_calls2023)%>% na.omit()
-  
+  mutate(date= as.yearmon(paste(Year, Month), "%Y %m"))|>
+  na.omit()
 
 group_month <- calls |>
   group_by(date, FinalCallGroup)|>
