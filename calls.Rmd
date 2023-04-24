@@ -74,6 +74,9 @@ ggplot(aes(x= fct_rev(fct_reorder(FinalCallGroup, count)), y= count))+
   p1_calls
 
 ```
+```{r}
+names(calls$FinalCallGroup)
+```
 
 
 
